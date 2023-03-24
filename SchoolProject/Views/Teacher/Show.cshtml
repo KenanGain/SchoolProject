@@ -1,0 +1,19 @@
+﻿@model SchoolProject.Models.Teacher
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>Show Teacher</h2>
+<p>
+   Hello! This is @Model.teacherfname @Model.teacherlname .
+</p>
+
+<p> My Teacher ID is @Model.teacherid .</p>
+
+<p> MY Employee number is @Model.employeenumber .</p>
+<p> I was hired on @Model.hiredate .</p>
+
+<p> My Salary is @Model.salary. </p>
+
+<br/> <br/>
+<a href="/Teacher/List">Back to TeacherList</a>
