@@ -24,10 +24,17 @@ namespace SchoolProject.Controllers
 
             if (double.TryParse(SearchKey, out searchkey))
             {
+                // Create an instance of a connection
                 MySqlConnection Conn = School.AccessDatabase();
+
+                // Open the connection between the web server and database
                 Conn.Open();
 
+                // Establish a new command (query) for our database
+
                 MySqlCommand cmd = Conn.CreateCommand();
+
+                // SQL query
 
                 cmd.CommandText = "Select * from teachers where salary >= (@key)";
 
@@ -71,10 +78,18 @@ namespace SchoolProject.Controllers
             else
             {
 
+                
+                // Create an instance of a connection
                 MySqlConnection Conn = School.AccessDatabase();
+
+                // Open the connection between the web server and database
                 Conn.Open();
 
+                // Establish a new command (query) for our database
+
                 MySqlCommand cmd = Conn.CreateCommand();
+
+                // SQL query
 
                 cmd.CommandText = "Select * from teachers where lower(teacherfname) like (@key) or lower(teacherlname) like (@key) or lower(concat(teacherfname,' ',teacherlname)) like lower(@key) or lower(hiredate) like lower(@key)";
 
@@ -120,10 +135,17 @@ namespace SchoolProject.Controllers
         {
             Teacher NewTeacher = new Teacher();
 
+            // Create an instance of a connection
             MySqlConnection Conn = School.AccessDatabase();
+
+            // Open the connection between the web server and database
             Conn.Open();
 
+            // Establish a new command (query) for our database
+
             MySqlCommand cmd = Conn.CreateCommand();
+
+            // SQL query
 
             cmd.CommandText = "Select * from teachers where teacherid = "+id;
 
@@ -149,6 +171,35 @@ namespace SchoolProject.Controllers
 
             return NewTeacher;
         
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <example>POST : /api/TeacherData/DeleteTeacher/3 </example>
+        /// 
+        [HttpPost]
+        public void DeleteTeacher(int id)
+        {
+            
+            // Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            // Open the connection between the web server and database
+            Conn.Open();
+
+            // Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL Query
+            cmd.CommandText = "Delete from teachers where teacherid = " + id;
+
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            //Close the connection between the MySQL Database and the WebServer
+            Conn.Close();
         }
         
     }
