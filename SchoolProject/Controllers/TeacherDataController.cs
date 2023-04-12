@@ -52,7 +52,8 @@ namespace SchoolProject.Controllers
                     int TeacherId = (int)ResultSet["teacherid"];
                     string TeacherFname = (string)ResultSet["teacherfname"];
                     string TeacherLname = (string)ResultSet["teacherlname"];
-                    string EmployeeNumber = (string)ResultSet["employeenumber"];
+                    // string EmployeeNumber = (string)ResultSet["employeenumber"];
+                    string EmployeeNumber = ResultSet["employeenumber"] == DBNull.Value ? null : (string)ResultSet["employeenumber"];
                     string HireDate = ResultSet["hiredate"].ToString();
                     double Salary = Convert.ToDouble(ResultSet["salary"]);
 
@@ -107,7 +108,8 @@ namespace SchoolProject.Controllers
                     int TeacherId = (int)ResultSet["teacherid"];
                     string TeacherFname = (string)ResultSet["teacherfname"];
                     string TeacherLname = (string)ResultSet["teacherlname"];
-                    string EmployeeNumber = (string)ResultSet["employeenumber"];
+                    //string EmployeeNumber = (string)ResultSet["employeenumber"];
+                    string EmployeeNumber = ResultSet["employeenumber"] == DBNull.Value ? null : (string)ResultSet["employeenumber"];
                     string HireDate = ResultSet["hiredate"].ToString();
                     double Salary = Convert.ToDouble(ResultSet["salary"]);
 
@@ -157,7 +159,8 @@ namespace SchoolProject.Controllers
                 int TeacherId = (int)ResultSet["teacherid"];
                 string TeacherFname = (string)ResultSet["teacherfname"];
                 string TeacherLname = (string)ResultSet["teacherlname"];
-                string EmployeeNumber = (string)ResultSet["employeenumber"];
+                // string EmployeeNumber = (string)ResultSet["employeenumber"];
+                string EmployeeNumber = ResultSet["employeenumber"] == DBNull.Value ? null : (string)ResultSet["employeenumber"];
                 string HireDate = ResultSet["hiredate"].ToString();
                 double Salary = Convert.ToDouble(ResultSet["salary"]);
 
@@ -200,6 +203,34 @@ namespace SchoolProject.Controllers
 
             //Close the connection between the MySQL Database and the WebServer
             Conn.Close();
+        }
+
+        public void AddTeacher([FromBody]Teacher NewTeacher)
+        {
+            // Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            // Open the connection between the web server and database
+            Conn.Open();
+
+            // Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL Query
+            cmd.CommandText = "Insert into teachers ( teacherfname, teacherlname, employeenumber, hiredate, salary) values (@TeacherFname,@TeacherLname,@Employeenumber,CURRENT_DATE(),@Salary) ";
+            //cmd.Parameters.AddWithValue("@TeacherID",NewTeacher.teacherid);
+            cmd.Parameters.AddWithValue("@TeacherFname",NewTeacher.teacherfname);
+            cmd.Parameters.AddWithValue("@TeacherLname",NewTeacher.teacherlname);
+            cmd.Parameters.AddWithValue("@Employeenumber",NewTeacher.employeenumber);
+            // cmd.Parameters.AddWithValue("@Hiredate",NewTeacher.hiredate);
+            cmd.Parameters.AddWithValue("@Salary",NewTeacher.salary);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            //Close the connection between the MySQL Database and the WebServer
+            Conn.Close();
+
         }
         
     }

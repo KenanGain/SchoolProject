@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SchoolProject.Models;
+using System.Diagnostics;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 
 namespace SchoolProject.Controllers
 {
@@ -46,6 +48,44 @@ namespace SchoolProject.Controllers
             TeacherDataController controller = new TeacherDataController();
             controller.DeleteTeacher(id);
             return RedirectToAction("List");
+        }
+
+        //GET : /Teacher/New
+        public ActionResult New() 
+        {
+            return View();
+        }
+
+        //GET : /Teacher/Create
+        [HttpPost]
+        
+        public ActionResult Create(string teacherfname , string teacherlname , string employeenumber , string hiredate , double salary )
+        {
+            //Identify that this method is running
+            //Identify the inpusts provided from the form
+
+            Debug.WriteLine("I have accessed the Create Method!");
+           // Debug.WriteLine(teacherid);
+            Debug.WriteLine(teacherfname);
+            Debug.WriteLine(teacherlname);
+            Debug.WriteLine(employeenumber);
+            // Debug.WriteLine(hiredate);
+            Debug.WriteLine(salary);
+
+            Teacher NewTeacher = new Teacher();
+           // NewTeacher.teacherid = teacherid;
+            NewTeacher.teacherfname = teacherfname;
+            NewTeacher.teacherlname = teacherlname;
+            NewTeacher.employeenumber = employeenumber;
+           // NewTeacher.hiredate = hiredate;
+            NewTeacher.salary= salary;
+
+            TeacherDataController Controller = new TeacherDataController();
+            Controller.AddTeacher(NewTeacher);
+      
+
+            return RedirectToAction("List");
+
         }
 
     }

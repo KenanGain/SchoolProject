@@ -14,5 +14,12 @@ namespace SchoolProject.Models
         public string employeenumber;
         public string hiredate;
         public double salary;
+
+        //Parameter-less constructor function
+
+        public Teacher()
+        {
+
+        }
     }
 }
