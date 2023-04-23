@@ -1,0 +1,50 @@
+﻿@model SchoolProject.Models.Teacher
+@{
+    ViewBag.Title = "Update";
+}
+
+
+<h2>Update Teacher</h2>
+<form method="post" action="/Teacher/Update/@Model.teacherid ">
+    <!--<div>
+         <label for="teacherid">Teacher Id:</label>
+         <input type="text" id="teacherid" name="teacherid" />
+     </div>
+     <br />-->
+
+    <div>
+        <label for="teacherfname">Teacher First Name:</label>
+        <input type="text" id="teacherfname" name="teacherfname" value="@Model.teacherfname" />
+    </div>
+    <br />
+    <div>
+        <label for="teacherlname">Teacher Last Name:</label>
+        <input type="text" id="teacherlname" name="teacherlname" value="@Model.teacherlname" />
+    </div>
+    <br />
+    <div>
+        <label for="employeenumber">Employeenumber:</label>
+        <input type="text" id="employeenumber" name="employeenumber" value="@Model.employeenumber" />
+    </div>
+    <br />
+    <!-- <div>
+          <label for="hiredate">Hiredate:</label>
+          <input type="text" id="hiredate" name="hiredate" />
+      </div>
+      <br /> -->
+    <div>
+        <label for="salary">Salary:</label>
+        <input type="text" id="salary" name="salary" value="@Model.salary" />
+    </div>
+    <br />
+    <div>
+        <input type="submit" value="Update" />
+    </div>
+</form>
+
+
+<br />
+
+
+<br />
+<a href="/Teacher/Show/@Model.teacherid"> Back </a>

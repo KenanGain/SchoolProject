@@ -218,12 +218,41 @@ namespace SchoolProject.Controllers
 
             //SQL Query
             cmd.CommandText = "Insert into teachers ( teacherfname, teacherlname, employeenumber, hiredate, salary) values (@TeacherFname,@TeacherLname,@Employeenumber,CURRENT_DATE(),@Salary) ";
-            //cmd.Parameters.AddWithValue("@TeacherID",NewTeacher.teacherid);
+      
             cmd.Parameters.AddWithValue("@TeacherFname",NewTeacher.teacherfname);
             cmd.Parameters.AddWithValue("@TeacherLname",NewTeacher.teacherlname);
             cmd.Parameters.AddWithValue("@Employeenumber",NewTeacher.employeenumber);
             // cmd.Parameters.AddWithValue("@Hiredate",NewTeacher.hiredate);
             cmd.Parameters.AddWithValue("@Salary",NewTeacher.salary);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            //Close the connection between the MySQL Database and the WebServer
+            Conn.Close();
+
+        }
+
+        public void UpdateTeacher(int id, [FromBody]Teacher TeacherInfo)
+        {
+            // Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            // Open the connection between the web server and database
+            Conn.Open();
+
+            // Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL Query
+            cmd.CommandText = "update teachers set teacherfname=@TeacherFname, teacherlname=@TeacherLname, employeenumber=@EmployeeNumber, salary=@Salary where teacherid=@TeacherId";
+
+            cmd.Parameters.AddWithValue("@TeacherFname", TeacherInfo.teacherfname);
+            cmd.Parameters.AddWithValue("@TeacherLname", TeacherInfo.teacherlname);
+            cmd.Parameters.AddWithValue("@Employeenumber", TeacherInfo.employeenumber);
+            // cmd.Parameters.AddWithValue("@Hiredate",TeacherInfo.hiredate);
+            cmd.Parameters.AddWithValue("@Salary", TeacherInfo.salary);
+            cmd.Parameters.AddWithValue("@TeacherId", id);
             cmd.Prepare();
 
             cmd.ExecuteNonQuery();

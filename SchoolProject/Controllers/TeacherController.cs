@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SchoolProject.Models;
 using System.Diagnostics;
 using Org.BouncyCastle.Bcpg.OpenPgp;
+using System.Web.UI.WebControls;
 
 namespace SchoolProject.Controllers
 {
@@ -27,9 +28,9 @@ namespace SchoolProject.Controllers
         public ActionResult Show(int id)
         {
             TeacherDataController controller = new TeacherDataController();
-            Teacher NewTeacher = controller.FindTeacher(id);
+            Teacher SelectedTeacher = controller.FindTeacher(id);
             
-            return View(NewTeacher);
+            return View(SelectedTeacher);
         }
 
         // GET: Teacher/DeleteConfirm
@@ -65,15 +66,16 @@ namespace SchoolProject.Controllers
             //Identify the inpusts provided from the form
 
             Debug.WriteLine("I have accessed the Create Method!");
-           // Debug.WriteLine(teacherid);
+           
             Debug.WriteLine(teacherfname);
             Debug.WriteLine(teacherlname);
             Debug.WriteLine(employeenumber);
-            // Debug.WriteLine(hiredate);
+            //  
+
             Debug.WriteLine(salary);
 
             Teacher NewTeacher = new Teacher();
-           // NewTeacher.teacherid = teacherid;
+          
             NewTeacher.teacherfname = teacherfname;
             NewTeacher.teacherlname = teacherlname;
             NewTeacher.employeenumber = employeenumber;
@@ -86,6 +88,46 @@ namespace SchoolProject.Controllers
 
             return RedirectToAction("List");
 
+        }
+
+        /// <summary>
+        /// Receives a Post request containing information about an existing teacher in the system.
+        /// </summary>
+        /// <param name="id">Id of the teacher </param>
+        /// <param name="teacherfname"> updated fname</param>
+        /// <param name="teacherlname"> updated lname</param>
+        /// <param name="employeenumber"> updated employeenumber </param>
+        /// <param name="salary"> updated salary </param>
+        /// <returns> dynamic webpage which provides the current information of the teacher.</returns>
+
+
+        //GET :/Teacher/Update{id}
+
+        public ActionResult Update(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher SelectedTeacher = controller.FindTeacher(id);
+
+            return View(SelectedTeacher);
+        }
+
+        //POST : /Teacher/Update/{id}
+        [HttpPost]
+        public ActionResult Update(int id, string teacherfname, string teacherlname, string employeenumber, string hiredate, double salary)
+        {
+
+            Teacher TeacherInfo = new Teacher();
+
+            TeacherInfo.teacherfname = teacherfname;
+            TeacherInfo.teacherlname = teacherlname;
+            TeacherInfo.employeenumber = employeenumber;
+            // NewTeacher.hiredate = hiredate;
+            TeacherInfo.salary = salary;
+
+            TeacherDataController Controller = new TeacherDataController();
+            Controller.UpdateTeacher(id, TeacherInfo);
+
+            return RedirectToAction("Show/" +id);
         }
 
     }

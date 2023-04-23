@@ -5,7 +5,7 @@
 
 <h2>Show Teacher</h2>
 <p>
-   Hello! This is @Model.teacherfname @Model.teacherlname .
+    Hello! This is @Model.teacherfname @Model.teacherlname .
 </p>
 
 <p> My Teacher ID is @Model.teacherid .</p>
@@ -15,8 +15,13 @@
 
 <p> My Salary is @Model.salary. </p>
 
-<br/> <br/>
+<br />
+<br />
 <a href="/Teacher/List">Back to TeacherList</a>
 <br />
-
+<br />
+<br />
+<a href="/Teacher/Update/@Model.teacherid">Update</a>
+<br />
+<br />
 <a href="/Teacher/DeleteConfirm/@Model.teacherid" style="color:red;">Delete</a>
